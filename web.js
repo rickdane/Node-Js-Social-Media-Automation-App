@@ -1,9 +1,22 @@
-var flatiron = require('flatiron'),
-    app = flatiron.app;
+/*var flatiron = require('flatiron'),
+    app = flatiron.app,
+    session = require('connect').session,
+    cookieParser = require('connect').cookieParser;*/
+
+
+var express = require('express');
+var app = express();
+
+
+/*
+app.get('/', function(req, res){
+    res.send('hello world');
+});
+*/
+
 
 var _ = require('underscore');
 
-//var jquery = require('js/jquery-1.7.2.js')
 
 var fs = require('fs');
 
@@ -20,57 +33,53 @@ require('./twitter.js')
 var util = require('util');
 
 
-app.use(flatiron.plugins.http, {
-    // HTTP options
-});
-
 
 var data = {"main":" Main Title"}
 
 
-app.router.get('/version', function () {
+app.get('/version', function (req, res) {
 
-    this.res.writeHead(200, {"Content-Type":"text/html"})
+    res.writeHead(200, {"Content-Type":"text/html"})
 
 
-    this.res.end(template);
+    res.end(template);
 
 });
 
-app.router.get('/testBinding', function () {
+app.get('/testBinding', function (req, res) {
 
     data["main"] = "some fucking thing"
 
-    this.res.end('flatiron ' + flatiron.version);
+    res.end('flatiron ' + flatiron.version);
 
 
 });
 
 
-app.router.get('/loadCss', function () {
+app.get('/loadCss', function (req, res) {
 
-    this.res.end(css);
-
-
-});
-
-app.router.get('/loadJs', function () {
-
-    this.res.end(testJs);
+    res.end(css);
 
 
 });
 
+app.get('/loadJs', function (req, res) {
 
-app.router.get('/entities', function () {
+    res.end(testJs);
+
+
+});
+
+
+app.get('/entities', function (req, res) {
 
     var jsonResp = {
         id:1,
         name:'my name'
     }
 
-    this.res.json(jsonResp);
-    this.res.end()
+    res.json(jsonResp);
+    res.end()
 
 });
 
@@ -112,7 +121,7 @@ var clearCollectionMongoose = function (Collection) {
 /**
  * Follows a pre-set number of followers from DB queue
  */
-app.router.get('/twitterFollow', function () {
+app.get('/twitterFollow', function (req, res) {
 
     var obj = this
 
@@ -143,17 +152,17 @@ app.router.get('/twitterFollow', function () {
 
         //show all current usernames currently in DB to user
         //TODO this should eventually show all that have not been followed, another follower endpoint will actually do following
-        obj.res.json(jsonResponse);
-        obj.res.end()
+        res.json(jsonResponse);
+        res.end()
     })
 
 })
 
 
-app.router.get('/twitter', function () {
+app.get('/twitter', function (req, res) {
     //adds users to follow queue
 
-    var obj = this
+    var self = this
 
     var T = Twitter.initTwit()
 
@@ -201,8 +210,8 @@ app.router.get('/twitter', function () {
 
                 //show all current usernames currently in DB to user
                 //TODO this should eventually show all that have not been followed, another follower endpoint will actually do following
-                obj.res.json(jsonResp);
-                obj.res.end()
+                res.json(jsonResp);
+                res.end()
             })
         }
         i++
@@ -218,7 +227,7 @@ app.router.get('/twitter', function () {
 
          //hack
          if (i <= maxCallbacksIter) {
-         twitterCreateHelper(T, obj, twitterUserScreenName)
+         twitterCreateHelper(T, self, twitterUserScreenName)
          }
          i++
 
@@ -272,7 +281,7 @@ var generateJsonOutputUsersToAddQueue = function (obj) {
 }
 
 
-app.router.post('/twitterSearch', function () {
+app.post('/twitterSearch', function (req, res) {
     //adds users to follow queue
 
     var obj = this
@@ -307,7 +316,7 @@ app.router.post('/twitterSearch', function () {
 });
 
 
-app.router.post('/twitter', function () {
+app.post('/twitter', function (req, res) {
 
     var reqBody = this.req.body
     this.res.json({
@@ -317,7 +326,7 @@ app.router.post('/twitter', function () {
 
 });
 
-app.router.put('/twitter', function () {
+app.put('/twitter', function (req, res) {
 
     var reqBody = this.req.body
     this.res.json({
@@ -327,23 +336,6 @@ app.router.put('/twitter', function () {
 
 });
 
-
-// This router syntax allows you to define multiple handlers for one path based
-// on http method.
-app.router.path('/', function () {
-
-    // This is the same functionality as previously.
-    this.get(function () {
-        this.res.writeHead(200, { 'content-type':'text/plain' });
-        this.res.end('hello!');
-    });
-
-    // Now, when you post a body to the server, it will reply with a JSON
-    // representation of the same body.
-    this.post(function () {
-        this.res.json(200, this.req.body);
-    });
-});
 
 
 var testSoda = function (soda, resultsMap) {
@@ -415,4 +407,4 @@ function continuous(resultsMap) {
 }
 
 
-app.start(7070);
+app.listen(7070);
