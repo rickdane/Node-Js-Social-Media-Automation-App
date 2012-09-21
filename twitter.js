@@ -1,22 +1,42 @@
 var _ = require('underscore')
+var fs = require('fs')
+var async = require('async');
+require('./util/UtilFile.js')
 
 Twitter = {
 
-    initTwit:function () {
+    initTwit:function (callback) {
 
         var Twit = require('twit')
 
-        var T = new Twit({
-            consumer_key:'xgOspPOxjmisSLgM4ulZHA',
-            consumer_secret:'GmEU0QwcONTv5jXJCAbtIWhGaLU0oW8Y3mlmgUJDcI',
-            access_token:'771240152-wkjx4r0QWxPQDk91vIadp28QYPuxkwEmw60DBXSk',
-            access_token_secret:'HMo9FPL7lWfudyWSiNK7VNDp7Spvd0PvY0tF3H8frk'
-        })
+        var twitterProperties = {}
 
-        return T
+        var T
+
+        async.series([
+            function (innerCallback) {
+
+                UtilFile.readPropertiesToMap("twitter_authentication.txt", twitterProperties, innerCallback)
+
+            },
+            function (innerCallback) {
+                T = new Twit({
+                    consumer_key:twitterProperties["consumer_key"],
+                    consumer_secret:twitterProperties["consumer_secret"],
+                    access_token:twitterProperties["access_token"],
+                    access_token_secret:twitterProperties["access_token_secret"]
+                })
+                innerCallback();
+            },
+            function (innerCallback) {
+                callback(T)
+                innerCallback()
+            }
+        ])
+
     },
     getFirstUserForSearch:function (T, callback) {
-           //this is just example, probably not useful for anything
+        //this is just example, probably not useful for anything
 
         T.get('users/search', { q:'node js' }, function (err, reply) {
 

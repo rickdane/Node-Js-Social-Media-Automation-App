@@ -1,18 +1,8 @@
-/*var flatiron = require('flatiron'),
-    app = flatiron.app,
-    session = require('connect').session,
-    cookieParser = require('connect').cookieParser;*/
-
-
 var express = require('express');
 var app = express();
-
-
-/*
-app.get('/', function(req, res){
-    res.send('hello world');
-});
-*/
+var passport = require("passport")
+var async = require('async');
+LocalStrategy = require("passport-local").Strategy
 
 
 var _ = require('underscore');
@@ -31,7 +21,6 @@ var soda = require('soda')
 require('./twitter.js')
 
 var util = require('util');
-
 
 
 var data = {"main":" Main Title"}
@@ -125,36 +114,44 @@ app.get('/twitterFollow', function (req, res) {
 
     var obj = this
 
-    var T = Twitter.initTwit()
+    Twitter.initTwit(function (T) {
 
-    var jsonResponse = new Array()
+        var jsonResponse = new Array()
 
-    TwitterUserRaw.find({isFollowed:"false"}, function (err, dataColl) {
+        TwitterUserRaw.find({isFollowed:"false"}, function (err, dataColl) {
 
-        var numToFollow = 5
+            var numToFollow = 5
 
-        var i = 0
-        _.each(dataColl, function (data) {
+            var i = 0
+            _.each(dataColl, function (data) {
 
-            if (i <= 5) {
-                data.isFollowed = "true"
-                data.save(function () {
-                });
+                if (i <= 5) {
+                    data.isFollowed = "true"
+                    data.save(function () {
+                    });
 
-                T.post('friendships/create', { screen_name:data.screenName }, function (err, reply) {
+                    T.post('friendships/create', { screen_name:data.screenName }, function (err, reply) {
 
-                })
+                    })
 
-                jsonResponse[i] = data.screenName
-            }
-            i++
+                    jsonResponse[i] = data.screenName
+                }
+                i++
+            })
+
+            //show all current usernames currently in DB to user
+            //TODO this should eventually show all that have not been followed, another follower endpoint will actually do following
+            res.json(jsonResponse);
+            res.end()
         })
 
-        //show all current usernames currently in DB to user
-        //TODO this should eventually show all that have not been followed, another follower endpoint will actually do following
-        res.json(jsonResponse);
-        res.end()
     })
+
+})
+
+
+app.get('/async', function (req, res) {
+
 
 })
 
@@ -335,7 +332,6 @@ app.put('/twitter', function (req, res) {
     });
 
 });
-
 
 
 var testSoda = function (soda, resultsMap) {
