@@ -3,20 +3,10 @@ var app = express();
 var passport = require("passport")
 var async = require('async');
 LocalStrategy = require("passport-local").Strategy
-
-
 var _ = require('underscore');
-
-
 var fs = require('fs');
-
-var Plates = require('plates');
-var template = fs.readFileSync("main.html", "utf-8");
 var testJs = fs.readFileSync("lib/client.js", "utf-8");
 var css = fs.readFileSync("main.css", "utf-8");
-
-var soda = require('soda')
-
 
 require('./twitter.js')
 
@@ -24,25 +14,6 @@ var util = require('util');
 
 
 var data = {"main":" Main Title"}
-
-
-app.get('/version', function (req, res) {
-
-    res.writeHead(200, {"Content-Type":"text/html"})
-
-
-    res.end(template);
-
-});
-
-app.get('/testBinding', function (req, res) {
-
-    data["main"] = "some fucking thing"
-
-    res.end('flatiron ' + flatiron.version);
-
-
-});
 
 
 app.get('/loadCss', function (req, res) {
@@ -107,15 +78,16 @@ var clearCollectionMongoose = function (Collection) {
     })
 }
 
+//just for test purposes, this wouldn't normally be hard-coded
+var userName = "devr_5"
+
+
 /**
  * Follows a pre-set number of followers from DB queue
  */
 app.get('/twitterFollow', function (req, res) {
 
-    var obj = this
-
-    Twitter.initTwit(function (T) {
-
+    Twitter.twitterRunCallback(userName, function (T) {
         var jsonResponse = new Array()
 
         TwitterUserRaw.find({isFollowed:"false"}, function (err, dataColl) {
@@ -144,93 +116,70 @@ app.get('/twitterFollow', function (req, res) {
             res.json(jsonResponse);
             res.end()
         })
-
     })
 
-})
-
-
-app.get('/async', function (req, res) {
-
 
 })
 
 
-app.get('/twitter', function (req, res) {
+app.get('/twitterQueue', function (req, res) {
     //adds users to follow queue
 
     var self = this
 
-    var T = Twitter.initTwit()
-
-    var jsonResp = new Array();
-
-    var startUserName = "mollycaudle"
-
-    var maxCallbacksIter = 7
-
-    //only uncomment this to clear collection in DB
-    //clearCollectionMongoose(TwitterUserRaw)
-
-    var i = 0
-    //NOTE: this is actually just adding users to DB, not following, that is done in a different endpoint function
-    Twitter.followFollowersOfUser(T, startUserName, new Array(), maxCallbacksIter, function (twitterUser) {
-
+    Twitter.twitterRunCallback(userName, function (T) {
         var jsonResp = new Array();
 
-        if (i < maxCallbacksIter) {
+        var startUserName = "mollycaudle"
 
-            TwitterUserRaw.find({screenName:twitterUser.screen_name}, function (err, dataColl) {
+        var maxCallbacksIter = 7
 
-                //only save it if there are no existing entries
-                //TODO probably not the most efficient way to check for this, see if an alternative method is meter
-                if (dataColl.length <= 0) {
-                    var rawUser = new TwitterUserRaw();
-                    rawUser.screenName = twitterUser.screen_name
-                    rawUser.userObj = twitterUser
-                    rawUser.isFollowed = "false"
-                    rawUser.save(function () {
+        //only uncomment this to clear collection in DB
+        //clearCollectionMongoose(TwitterUserRaw)
 
-                    });
-                }
-            })
+        var i = 0
+        //NOTE: this is actually just adding users to DB, not following, that is done in a different endpoint function
+        Twitter.followFollowersOfUser(T, startUserName, new Array(), maxCallbacksIter, function (twitterUser) {
 
-        }
-        else {
-            TwitterUserRaw.find({isFollowed:"false"}, function (err, dataColl) {
+            var jsonResp = new Array();
 
-                var i = 0
-                _.each(dataColl, function (data) {
-                    jsonResp[i] = data.screenName
-                    i++
+            if (i < maxCallbacksIter) {
+
+                TwitterUserRaw.find({screenName:twitterUser.screen_name}, function (err, dataColl) {
+
+                    //only save it if there are no existing entries
+                    //TODO probably not the most efficient way to check for this, see if an alternative method is meter
+                    if (dataColl.length <= 0) {
+                        var rawUser = new TwitterUserRaw();
+                        rawUser.screenName = twitterUser.screen_name
+                        rawUser.userObj = twitterUser
+                        rawUser.isFollowed = "false"
+                        rawUser.save(function () {
+
+                        });
+                    }
                 })
 
-                //show all current usernames currently in DB to user
-                //TODO this should eventually show all that have not been followed, another follower endpoint will actually do following
-                res.json(jsonResp);
-                res.end()
-            })
-        }
-        i++
+            }
+            else {
+                TwitterUserRaw.find({isFollowed:"false"}, function (err, dataColl) {
 
-        /*        //TODO this is complete crap, no separation of concerns, thought about storing data in DB, just for POC purposes, need to figure how to make this cleaner by breaking out to separate functions
+                    var i = 0
+                    _.each(dataColl, function (data) {
+                        jsonResp[i] = data.screenName
+                        i++
+                    })
 
-         jsonResp[  jsonResp.length ] = twitterUser.screen_name
+                    //show all current usernames currently in DB to user
+                    //TODO this should eventually show all that have not been followed, another follower endpoint will actually do following
+                    res.json(jsonResp);
+                    res.end()
+                })
+            }
+            i++
 
-         if (jsonResp.length >= maxCallbacksIter) {
+        })
 
-         var i = 0
-         _.each(jsonResp, function (twitterUserScreenName) {
-
-         //hack
-         if (i <= maxCallbacksIter) {
-         twitterCreateHelper(T, self, twitterUserScreenName)
-         }
-         i++
-
-         })
-
-         }*/
 
     })
 
@@ -332,75 +281,6 @@ app.put('/twitter', function (req, res) {
     });
 
 });
-
-
-var testSoda = function (soda, resultsMap) {
-
-    var products = new Array("laptop1", "laptop2");
-
-    for (var i in products) {
-
-        var browser = soda.createClient({
-            host:'localhost', port:4444, url:'http://www.google.com', browser:'firefox'
-        });
-
-        var chain = browser.chain
-
-        chain.session()
-            .open('/')
-            .type('q', products[i])
-            .click('gbqfsa')
-            .getTitle(function (title) {
-                resultsMap[i] = title
-
-            })
-            .end(function (err) {
-                // browser.close()
-            });
-
-    }
-}
-
-
-var testTwitter = function (dbClient) {
-
-
-    var T = initTwit(dbClient)
-
-// Post Tweet
-    /*   T.post('statuses/update', { status:'Working on a node js project' }, function (err, reply) {
-     var s = ""
-     });*/
-
-    //Search for user
-    T.get('users/search', { q:'node js' }, function (err, reply) {
-
-        var userName = reply[0].screen_name
-
-        //Follow user
-        T.post('friendships/create', { screen_name:userName}, function (err, reply) {
-            var s = ""
-        });
-
-    });
-
-
-}
-
-var insertData = function (err, collection) {
-    collection.insert({name:"Kristiono Setyadi"});
-    collection.insert({name:"Meghan Gill"});
-    collection.insert({name:"Spiderman"});
-}
-
-
-function continuous(resultsMap) {
-
-    setTimeout(function () {
-        continuous()
-    }, 5000)
-
-}
 
 
 app.listen(7070);
