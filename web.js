@@ -8,6 +8,9 @@ var fs = require('fs');
 var testJs = fs.readFileSync("lib/client.js", "utf-8");
 var css = fs.readFileSync("main.css", "utf-8");
 
+//for processing of http input parameters, etc
+app.use(express.bodyParser());
+
 require('./twitter.js')
 
 var util = require('util');
@@ -226,38 +229,38 @@ var generateJsonOutputUsersToAddQueue = function (obj) {
 
 }
 
+/**
+ * Adds users to follow queue
+ */
 
 app.post('/twitterSearch', function (req, res) {
-    //adds users to follow queue
 
-    var obj = this
+    var self = this
 
-    var T = Twitter.initTwit()
+    var query = req.body.q
 
-    var i = 1
+    Twitter.twitterRunCallback(userName, function (T) {
 
-    var reqBody = this.req.body
-    var query = reqBody.q
+        var i = 1
 
-    //number of new users to add to queue
-    var maxNumToAdd = 15;
+        //number of new users to add to queue
+        var maxNumToAdd = 15;
 
-    //only uncomment this to clear collection in DB
-    //clearCollectionMongoose(TwitterUserRaw)
 
-    var query = "looking node".
-
-        T.get('users/search', { q:query }, function (err, reply) {
+        T.get('users/search', { q:query }, function (err, dataColl) {
             _.each(dataColl, function (data) {
 
                 if (i <= maxNumToAdd)
-                    addToFollowUserToDb(reply)
+                    addToFollowUserToDb(data)
                 else
-                    generateJsonOutputUsersToAddQueue(obj)
+                    generateJsonOutputUsersToAddQueue(self)
                 i++
 
             })
         })
+
+    })
+
 
 });
 
