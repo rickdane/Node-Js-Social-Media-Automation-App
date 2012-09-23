@@ -8,10 +8,17 @@ var fs = require('fs');
 var testJs = fs.readFileSync("lib/client.js", "utf-8");
 var css = fs.readFileSync("main.css", "utf-8");
 
+require('./twitter.js')
+require('./Db.js')
+require('./webHelper.js')
+
 //for processing of http input parameters, etc
 app.use(express.bodyParser());
 
-require('./twitter.js')
+
+//this is empty, for now, but would contain user id's that we don't want to follow, for whatever reason (id'd as spam, etc)
+var followIgnoreList = new Array()
+
 
 var util = require('util');
 
@@ -45,44 +52,6 @@ app.get('/entities', function (req, res) {
     res.end()
 
 });
-
-
-//example of setting up mongoose for mongo db -----------
-var mongoose = require('mongoose/');
-db = mongoose.connect("mongodb://localhost/goaljuice"),
-    Schema = mongoose.Schema;
-
-// Create a schema for our data
-var TwitterUserRawSchema = new Schema({
-    screenName:String,
-    userObj:Object,
-    isFollowed:String
-});
-// Example: Use the schema to register a model with MongoDb
-//mongoose.model('TwitterUsersRaw', MessageSchema);
-
-mongoose.model('TwitterUserRaw', TwitterUserRawSchema);
-var TwitterUserRaw = mongoose.model('TwitterUserRaw');
-
-
-var twitterFollowHelper = function (T, obj, twitterUserScreenName) {
-    T.post('friendships/create', { screen_name:twitterUserScreenName }, function (err, reply) {
-
-        obj.res.json(twitterUserScreenName);
-        obj.res.end()
-    })
-}
-
-var clearCollectionMongoose = function (Collection) {
-    Collection.find({}, function (err, dataColl) {
-        _.each(dataColl, function (model) {
-            model.remove()
-        })
-    })
-}
-
-//just for test purposes, this wouldn't normally be hard-coded
-var userName = "devr_5"
 
 
 /**
@@ -125,14 +94,18 @@ app.get('/twitterFollow', function (req, res) {
 })
 
 
+WebHelper.loadFollowedOfCurUser()
+
+
 app.get('/twitterQueue', function (req, res) {
     //adds users to follow queue
 
     var self = this
 
-    Twitter.twitterRunCallback(userName, function (T) {
+    Twitter.twitterRunCallback(WebHelper.getUserName(), function (T) {
         var jsonResp = new Array();
 
+        //just for testing, random username
         var startUserName = "mollycaudle"
 
         var maxCallbacksIter = 7
@@ -148,7 +121,7 @@ app.get('/twitterQueue', function (req, res) {
 
             if (i < maxCallbacksIter) {
 
-                TwitterUserRaw.find({screenName:twitterUser.screen_name}, function (err, dataColl) {
+                Db.getTwitterUserRaw().find({screenName:twitterUser.screen_name}, function (err, dataColl) {
 
                     //only save it if there are no existing entries
                     //TODO probably not the most efficient way to check for this, see if an alternative method is meter
@@ -165,7 +138,7 @@ app.get('/twitterQueue', function (req, res) {
 
             }
             else {
-                TwitterUserRaw.find({isFollowed:"false"}, function (err, dataColl) {
+                Db.getTwitterUserRaw().find({isFollowed:"false"}, function (err, dataColl) {
 
                     var i = 0
                     _.each(dataColl, function (data) {
@@ -189,24 +162,6 @@ app.get('/twitterQueue', function (req, res) {
 
 });
 
-var addToFollowUserToDb = function (twitterUser) {
-
-    TwitterUserRaw.find({screenName:twitterUser.screen_name}, function (err, dataColl) {
-
-        //only save it if there are no existing entries
-        //TODO probably not the most efficient way to check for this, see if an alternative method is meter
-        if (dataColl.length <= 0) {
-            var rawUser = new TwitterUserRaw();
-            rawUser.screenName = twitterUser.screen_name
-            rawUser.userObj = twitterUser
-            rawUser.isFollowed = "false"
-            rawUser.save(function () {
-
-            });
-        }
-    })
-
-}
 
 var generateJsonOutputUsersToAddQueue = function (obj) {
 
@@ -229,15 +184,20 @@ var generateJsonOutputUsersToAddQueue = function (obj) {
 
 }
 
-/**
- * Adds users to follow queue
- */
 
-app.post('/twitterSearch', function (req, res) {
+var getGeoCode = function (location) {
+    //this is just for test purposes, this would need to be expanded out to actually give the geolocation based on user's input
+    //todo should enable user to pass in city / state to obtain this automatically, for now just hard-coded for testing
+    var milesFromGeoLocation = "70mi"
+    var geoCode = "37.779333,-122.393163," + milesFromGeoLocation   //this is within San Francisco, CA
+    return geoCode
+}
+
+app.post('/tweetUserSearch', function (req, res) {
 
     var self = this
 
-    var query = req.body.q
+    req.body.geocode = getGeoCode()
 
     Twitter.twitterRunCallback(userName, function (T) {
 
@@ -247,11 +207,49 @@ app.post('/twitterSearch', function (req, res) {
         var maxNumToAdd = 15;
 
 
-        T.get('users/search', { q:query }, function (err, dataColl) {
+        T.get('search', WebHelper.facetedSearchBuilder(req.body), function (err, dataColl) {
+            _.each(dataColl.results, function (data) {
+
+                if (curFollowedCurUser.indexOf(data.from_user_id) < 0 && followIgnoreList.indexOf(data.from_user_id) < 0) {
+                    //user hasn't been followed yet and is not in ignore list so we can follow
+
+
+                }
+
+                /*                if (i <= maxNumToAdd)
+                 Db.addToFollowUserToDb(data)
+                 else
+                 generateJsonOutputUsersToAddQueue(self)
+                 i++*/
+
+            })
+        })
+
+    })
+
+
+});
+
+/**
+ * Adds users to follow queue
+ */
+app.post('/twitterSearch', function (req, res) {
+
+    var self = this
+
+    Twitter.twitterRunCallback(userName, function (T) {
+
+        var i = 1
+
+        //number of new users to add to queue
+        var maxNumToAdd = 15;
+
+
+        T.get('users/search', WebHelper.facetedSearchBuilder(req.body), function (err, dataColl) {
             _.each(dataColl, function (data) {
 
                 if (i <= maxNumToAdd)
-                    addToFollowUserToDb(data)
+                    Db.addToFollowUserToDb(data)
                 else
                     generateJsonOutputUsersToAddQueue(self)
                 i++
@@ -260,8 +258,6 @@ app.post('/twitterSearch', function (req, res) {
         })
 
     })
-
-
 });
 
 
