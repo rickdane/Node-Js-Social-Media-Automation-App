@@ -33,7 +33,15 @@ Db = {
     },
     addToFollowUserToDb:function (twitterUser) {
 
-        TwitterUserRaw.find({screenName:twitterUser.screen_name}, function (err, dataColl) {
+        //TODO this needs work to make it useable for more than 1 use case
+
+        //TODO this is a bit of a hack to accommodate now taking in "true" user object, figure way to make this cleaner
+        var screenName = twitterUser.screen_name
+        if (screenName == undefined)
+            screenName = twitterUser.from_user
+
+        //TODO something is wrong here with DB call, need to figure out and fix this
+        TwitterUserRaw.find({screenName:screenName}, function (err, dataColl) {
 
             //only save it if there are no existing entries
             //TODO probably not the most efficient way to check for this, see if an alternative method is meter

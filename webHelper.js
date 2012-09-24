@@ -3,7 +3,7 @@ var _ = require('underscore');
 var fs = require('fs');
 require('./twitter.js')
 
-twitterSearchParams : new Array('q', 'geocode')
+var twitterSearchParams = new Array('q', 'geocode')
 
 //just for test purposes, this wouldn't normally be hard-coded
 var userName = "devr_5"
@@ -15,6 +15,7 @@ WebHelper = {
 
 // Example: Use the schema to register a model with MongoDb
 //mongoose.model('TwitterUsersRaw', MessageSchema);
+
     getUserName:function () {
         return userName
     },
@@ -49,6 +50,33 @@ WebHelper = {
         }
         return searchObj
 
+    },
+    generateJsonOutputUsersToAddQueue:function (obj) {
+
+        var jsonResp = new Array();
+
+        //todo break this out into function as other endpoints want to use this as well
+        TwitterUserRaw.find({isFollowed:"false"}, function (err, dataColl) {
+
+            var i = 0
+            _.each(dataColl, function (data) {
+                jsonResp[i] = data.screenName
+                i++
+            })
+
+            //show all current usernames currently in DB to user
+            //TODO this should eventually show all that have not been followed, another follower endpoint will actually do following
+            obj.res.json(jsonResp);
+            obj.res.end()
+        })
+
+    },
+    getGeoCode:function (location) {
+        //this is just for test purposes, this would need to be expanded out to actually give the geolocation based on user's input
+        //todo should enable user to pass in city / state to obtain this automatically, for now just hard-coded for testing
+        var milesFromGeoLocation = "70mi"
+        var geoCode = "37.779333,-122.393163," + milesFromGeoLocation   //this is within San Francisco, CA
+        return geoCode
     }
 
 }

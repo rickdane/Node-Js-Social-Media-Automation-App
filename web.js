@@ -59,10 +59,10 @@ app.get('/entities', function (req, res) {
  */
 app.get('/twitterFollow', function (req, res) {
 
-    Twitter.twitterRunCallback(userName, function (T) {
+    Twitter.twitterRunCallback(WebHelper.getUserName(), function (T) {
         var jsonResponse = new Array()
 
-        TwitterUserRaw.find({isFollowed:"false"}, function (err, dataColl) {
+        Db.getTwitterUserRaw().find({isFollowed:"false"}, function (err, dataColl) {
 
             var numToFollow = 5
 
@@ -155,51 +155,17 @@ app.get('/twitterQueue', function (req, res) {
             i++
 
         })
-
-
     })
-
-
 });
 
 
-var generateJsonOutputUsersToAddQueue = function (obj) {
-
-    var jsonResp = new Array();
-
-    //todo break this out into function as other endpoints want to use this as well
-    TwitterUserRaw.find({isFollowed:"false"}, function (err, dataColl) {
-
-        var i = 0
-        _.each(dataColl, function (data) {
-            jsonResp[i] = data.screenName
-            i++
-        })
-
-        //show all current usernames currently in DB to user
-        //TODO this should eventually show all that have not been followed, another follower endpoint will actually do following
-        obj.res.json(jsonResp);
-        obj.res.end()
-    })
-
-}
-
-
-var getGeoCode = function (location) {
-    //this is just for test purposes, this would need to be expanded out to actually give the geolocation based on user's input
-    //todo should enable user to pass in city / state to obtain this automatically, for now just hard-coded for testing
-    var milesFromGeoLocation = "70mi"
-    var geoCode = "37.779333,-122.393163," + milesFromGeoLocation   //this is within San Francisco, CA
-    return geoCode
-}
-
-app.post('/tweetUserSearch', function (req, res) {
+app.post('/tweetSearchForUsers', function (req, res) {
 
     var self = this
 
-    req.body.geocode = getGeoCode()
+    req.body.geocode = WebHelper.getGeoCode()
 
-    Twitter.twitterRunCallback(userName, function (T) {
+    Twitter.twitterRunCallback(WebHelper.getUserName(), function (T) {
 
         var i = 1
 
@@ -211,23 +177,19 @@ app.post('/tweetUserSearch', function (req, res) {
             _.each(dataColl.results, function (data) {
 
                 if (curFollowedCurUser.indexOf(data.from_user_id) < 0 && followIgnoreList.indexOf(data.from_user_id) < 0) {
-                    //user hasn't been followed yet and is not in ignore list so we can follow
+                    //user hasn't been followed yet and is not in ignore list so we can add to follow queue
 
+                    //TODO see if there is there a way to make the code block below into one liner
+                    if (i <= maxNumToAdd)
+                        Db.addToFollowUserToDb(data)
+                    else
+                        WebHelper.generateJsonOutputUsersToAddQueue(self)
+                    i++
 
                 }
-
-                /*                if (i <= maxNumToAdd)
-                 Db.addToFollowUserToDb(data)
-                 else
-                 generateJsonOutputUsersToAddQueue(self)
-                 i++*/
-
             })
         })
-
     })
-
-
 });
 
 /**
@@ -251,7 +213,7 @@ app.post('/twitterSearch', function (req, res) {
                 if (i <= maxNumToAdd)
                     Db.addToFollowUserToDb(data)
                 else
-                    generateJsonOutputUsersToAddQueue(self)
+                    WebHelper.generateJsonOutputUsersToAddQueue(self)
                 i++
 
             })
