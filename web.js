@@ -5,7 +5,7 @@ var async = require('async');
 LocalStrategy = require("passport-local").Strategy
 var _ = require('underscore');
 var fs = require('fs');
-var testJs = fs.readFileSync("lib/client_example.js", "utf-8");
+var testJs = fs.readFileSync("lib/gPlusClient.js", "utf-8");
 var css = fs.readFileSync("main.css", "utf-8");
 var gPlusUi = fs.readFileSync("html/gPlusUi.html", "utf-8");
 require('./util/UtilFile.js')
@@ -245,11 +245,23 @@ app.get('/loadGplusApp', function (req, res) {
 
 app.get('/defaultSearch', function (req, res) {
 
+    var testUserId = "115228087852945642621"
+
     GPlus.makeApiCall(function (data) {
 
-        res.send(data);
+        var jsonApiResp = JSON.parse(data);
 
-    }, "people/115228087852945642621", 'GET')
+        var jsonResp = {}
+        jsonResp.users = new Array()
+        jsonResp.users  = {
+            name:jsonApiResp.name.givenName + " " + jsonApiResp.name.familyName,
+            title:jsonApiResp.organizations[0].title
+
+        }
+
+        res.json(jsonResp)
+
+    }, "people/" + testUserId, 'GET')
 
 });
 
