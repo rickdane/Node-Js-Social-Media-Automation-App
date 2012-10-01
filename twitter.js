@@ -18,7 +18,7 @@ Twitter = {
         async.series([
             function (innerCallback) {
 
-                UtilFile.readPropertiesToMap("twitter_authentication.txt", twitterProperties, innerCallback)
+                UtilFile.readPropertiesToMap("authentication_twitter.txt", twitterProperties, innerCallback)
 
             },
             function (innerCallback) {

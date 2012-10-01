@@ -5,15 +5,17 @@ var async = require('async');
 LocalStrategy = require("passport-local").Strategy
 var _ = require('underscore');
 var fs = require('fs');
-var testJs = fs.readFileSync("lib/client.js", "utf-8");
+var testJs = fs.readFileSync("lib/client_example.js", "utf-8");
 var css = fs.readFileSync("main.css", "utf-8");
-
+var gPlusUi = fs.readFileSync("html/gPlusUi.html", "utf-8");
+require('./util/UtilFile.js')
 require('./twitter.js')
+require('./gPlus.js')
 require('./Db.js')
 require('./webHelper.js')
 
 //for processing of http input parameters, etc
-app.use(express.bodyParser());
+app.use(express.bodyParser())
 
 
 //this is empty, for now, but would contain user id's that we don't want to follow, for whatever reason (id'd as spam, etc)
@@ -37,19 +39,6 @@ app.get('/loadJs', function (req, res) {
 
     res.end(testJs);
 
-
-});
-
-
-app.get('/entities', function (req, res) {
-
-    var jsonResp = {
-        id:1,
-        name:'my name'
-    }
-
-    res.json(jsonResp);
-    res.end()
 
 });
 
@@ -240,6 +229,27 @@ app.put('/twitter', function (req, res) {
         id:1,
         name:'my name'
     });
+
+});
+
+
+//--------- G+  ------------------------
+//TODO break these controllers out into their own file
+
+
+app.get('/loadGplusApp', function (req, res) {
+
+    res.send(gPlusUi);
+
+});
+
+app.get('/defaultSearch', function (req, res) {
+
+    GPlus.makeApiCall(function (data) {
+
+        res.send(data);
+
+    }, "people/115228087852945642621", 'GET')
 
 });
 
