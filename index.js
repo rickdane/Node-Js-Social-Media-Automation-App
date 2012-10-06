@@ -12,7 +12,7 @@ app.set('views', __dirname + '/views')
 
 //for processing of http input parameters, etc
 app.use(express.bodyParser())
-
+app.use(express.methodOverride());
 /*app.use(express.cookieParser());
  app.use(express.methodOverride());
  app.use(express.static(__dirname + '/public'));*/

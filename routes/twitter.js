@@ -167,15 +167,14 @@ exports.twitterSearch = function (req, res) {
 
 
         T.get('users/search', WebHelper.facetedSearchBuilder(req.query), function (err, dataColl) {
+            //take subset, todo make this more dynamic as if its smaller than 15 it wouldn't work
+            dataColl = dataColl.slice(0, 15)
             _.each(dataColl, function (data) {
-
-                if (i <= maxNumToAdd)
-                    Db.addToFollowUserToDb(data)
-                else
-                    WebHelper.generateJsonOutputUsersToAddQueue(res)
-                i++
+                Db.addToFollowUserToDb(data)
 
             })
+
+            WebHelper.generateJsonOutputUsersToAddQueue(res)
         })
 
     })

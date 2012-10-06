@@ -61,8 +61,11 @@ WebHelper = {
 
             //show all current usernames currently in DB to user
             //TODO this should eventually show all that have not been followed, another follower endpoint will actually do following
+         //   res.render('users', { title: 'Users', users: jsonResp });
+
             res.json(jsonResp);
             res.end()
+            return;
         })
 
     },
