@@ -2,11 +2,9 @@ var async = require('async');
 var _ = require('underscore');
 var fs = require('fs');
 require('./twitter.js')
+require('./Db.js')
 
 var twitterSearchParams = new Array('q', 'geocode')
-
-//just for test purposes, this wouldn't normally be hard-coded
-var userName = "devr_5"
 
 curFollowedCurUser = new Array()
 
@@ -16,9 +14,6 @@ WebHelper = {
 // Example: Use the schema to register a model with MongoDb
 //mongoose.model('TwitterUsersRaw', MessageSchema);
 
-    getUserName:function () {
-        return userName
-    },
     twitterFollowHelper:function (T, obj, twitterUserScreenName) {
         T.post('friendships/create', { screen_name:twitterUserScreenName }, function (err, reply) {
 
@@ -26,8 +21,8 @@ WebHelper = {
             obj.res.end()
         })
     },
-    loadFollowedOfCurUser:function () {
-        Twitter.twitterRunCallback(userName, function (T) {
+/*    loadFollowedOfCurUser:function (T) {
+        Twitter.twitterRunCallback(function (T) {
             T.get('friends/ids', {}, function (err, dataColl) {
                 _.each(dataColl.ids, function (data) {
 
@@ -36,7 +31,7 @@ WebHelper = {
                 })
             })
         })
-    },
+    },*/
     /**
      * for building faceted query, the incoming post query may contain extra parameters that aren't relevant to twitter api call so this prepares a new object for the twitter api call
      */
@@ -51,12 +46,12 @@ WebHelper = {
         return searchObj
 
     },
-    generateJsonOutputUsersToAddQueue:function (obj) {
+    generateJsonOutputUsersToAddQueue:function (res) {
 
         var jsonResp = new Array();
 
         //todo break this out into function as other endpoints want to use this as well
-        TwitterUserRaw.find({isFollowed:"false"}, function (err, dataColl) {
+        Db.getTwitterUserRaw().find({isFollowed:"false"}, function (err, dataColl) {
 
             var i = 0
             _.each(dataColl, function (data) {
@@ -66,8 +61,8 @@ WebHelper = {
 
             //show all current usernames currently in DB to user
             //TODO this should eventually show all that have not been followed, another follower endpoint will actually do following
-            obj.res.json(jsonResp);
-            obj.res.end()
+            res.json(jsonResp);
+            res.end()
         })
 
     },

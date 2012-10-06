@@ -18,7 +18,7 @@ var data = {"main":" Main Title"}
  */
 exports.twitterFollow = function (req, res) {
 
-    Twitter.twitterRunCallback(WebHelper.getUserName(), function (T) {
+    Twitter.twitterRunCallback(function (T) {
         var jsonResponse = new Array()
 
         Db.getTwitterUserRaw().find({isFollowed:"false"}, function (err, dataColl) {
@@ -53,7 +53,7 @@ exports.twitterFollow = function (req, res) {
 }
 
 
-WebHelper.loadFollowedOfCurUser()
+//WebHelper.loadFollowedOfCurUser()
 
 
 exports.twitterQueue = function (req, res) {
@@ -61,7 +61,7 @@ exports.twitterQueue = function (req, res) {
 
     var self = this
 
-    Twitter.twitterRunCallback(WebHelper.getUserName(), function (T) {
+    Twitter.twitterRunCallback(function (T) {
         var jsonResp = new Array();
 
         //just for testing, random username
@@ -124,7 +124,7 @@ exports.tweetSearchForUsers = function (req, res) {
 
     req.body.geocode = WebHelper.getGeoCode()
 
-    Twitter.twitterRunCallback(WebHelper.getUserName(), function (T) {
+    Twitter.twitterRunCallback(function (T) {
 
         var i = 1
 
@@ -158,7 +158,7 @@ exports.twitterSearch = function (req, res) {
 
     var self = this
 
-    Twitter.twitterRunCallback(userName, function (T) {
+    Twitter.twitterRunCallback(function (T) {
 
         var i = 1
 
@@ -166,13 +166,13 @@ exports.twitterSearch = function (req, res) {
         var maxNumToAdd = 15;
 
 
-        T.get('users/search', WebHelper.facetedSearchBuilder(req.body), function (err, dataColl) {
+        T.get('users/search', WebHelper.facetedSearchBuilder(req.query), function (err, dataColl) {
             _.each(dataColl, function (data) {
 
                 if (i <= maxNumToAdd)
                     Db.addToFollowUserToDb(data)
                 else
-                    WebHelper.generateJsonOutputUsersToAddQueue(self)
+                    WebHelper.generateJsonOutputUsersToAddQueue(res)
                 i++
 
             })

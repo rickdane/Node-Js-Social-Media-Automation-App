@@ -4,14 +4,13 @@ var async = require('async');
 require('./util/UtilFile.js')
 
 var twitterClientHolder = {}
+var twitterProperties = {}
 
 Twitter = {
 
-    initTwit:function (userName, twitterClientHolder, callback) {
+    initTwit:function (twitterClientHolder, callback) {
 
         var Twit = require('twit')
-
-        var twitterProperties = {}
 
         var T
 
@@ -31,7 +30,7 @@ Twitter = {
                 innerCallback();
             },
             function (innerCallback) {
-                twitterClientHolder[userName] = T
+                twitterClientHolder[twitterProperties["username"]] = T
                 innerCallback()
                 callback()
             }
@@ -87,20 +86,20 @@ Twitter = {
     /**
      * experimental way of doing this
      */
-    twitterRunCallback:function (userName, callback) {
+    twitterRunCallback:function (callback) {
 
         var T
 
         async.series([
             function (innerCallback) {
 
-                T = twitterClientHolder[userName]
+                T = twitterClientHolder[twitterProperties["username"]]
                 innerCallback()
 
             },
             function (innerCallback) {
                 if (T == undefined) {
-                    Twitter.initTwit(userName, twitterClientHolder, innerCallback)
+                    Twitter.initTwit( twitterClientHolder, innerCallback)
 
                 }
                 else
@@ -108,7 +107,7 @@ Twitter = {
             },
             function (innerCallback) {
 
-                T = twitterClientHolder[userName]
+                T = twitterClientHolder[twitterProperties["username"]]
 
                 callback(T)
 
