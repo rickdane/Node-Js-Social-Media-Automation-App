@@ -10,19 +10,51 @@ var mongoose = require('mongoose/');
 db = mongoose.connect("mongodb://localhost/goaljuice"),
     Schema = mongoose.Schema;
 
-// Create a schema for our data
-var TwitterUserRawSchema = new Schema({
-    screenName:String,
+var AssociatedAccounts = new Schema({
+    linkedin:String,
+    twitter:String,
+    meetup:String
+})
+
+var SocialMediaAccount = new Schema({
+    username:String,
+    lastToMessageDate:String,
+    lastFromMessageDate:String,
+    followsMe:Boolean,
+    dateFollowed:String,
+    isFollowed:Boolean,
+    dateCreated:String,
+    ignore:Boolean,
+    accountType:String,
     userObj:Object,
-    isFollowed:String
+    associatedAccountsReference:Number,
+    ownerId:String
+})
+
+
+//This may not be needed
+var RawContactsHolder = new Schema({
+    twitter:[SocialMediaAccount],
+    linkedin:[SocialMediaAccount],
+    meetup:[SocialMediaAccount]
+
 });
 
-mongoose.model('TwitterUserRaw', TwitterUserRawSchema);
-var TwitterUserRaw = mongoose.model('TwitterUserRaw');
+mongoose.model('SocialMediaAccount', SocialMediaAccount);
+mongoose.model('AssociatedAccounts', AssociatedAccounts);
+mongoose.model('RawContactsHolder', RawContactsHolder);
+var SocialMediaAccount = mongoose.model('SocialMediaAccount');
+var AssociatedAccounts = mongoose.model('AssociatedAccounts');
+var RawContactsHolder = mongoose.model('RawContactsHolder');
+
+//this would eventually hold one "rawContacts" object per user of this application
+var rawContactsHolder = new RawContactsHolder()
+//
+
 
 Db = {
-    getTwitterUserRaw:function () {
-        return  TwitterUserRaw
+    getSocialMediaAccount:function () {
+        return  SocialMediaAccount
     },
     clearCollectionMongoose:function (Collection) {
         Collection.find({}, function (err, dataColl) {
@@ -31,7 +63,7 @@ Db = {
             })
         })
     },
-    addToFollowUserToDb:function (twitterUser) {
+    addTwitterUserToFollowUserToDb:function (twitterUser, curUserId) {
 
         //TODO this needs work to make it useable for more than 1 use case
 
@@ -41,15 +73,18 @@ Db = {
             screenName = twitterUser.from_user
 
         //TODO something is wrong here with DB call, need to figure out and fix this
-        TwitterUserRaw.find({screenName:screenName}, function (err, dataColl) {
+        SocialMediaAccount.find({username:screenName, ownerId:curUserId}, function (err, dataColl) {
 
             //only save it if there are no existing entries
             //TODO probably not the most efficient way to check for this, see if an alternative method is meter
             if (dataColl.length <= 0) {
-                var rawUser = new TwitterUserRaw();
-                rawUser.screenName = twitterUser.screen_name
+                var rawUser = new SocialMediaAccount();
+                rawUser.username = twitterUser.screen_name
                 rawUser.userObj = twitterUser
-                rawUser.isFollowed = "false"
+                rawUser.ownerId = curUserId
+                rawUser.accountType = "twitter"
+                rawUser.isFollowed = false
+                //TODO write function to populate other values in SocialMediaAccount with default values (or figure way to do this with schema directly)
                 rawUser.save(function () {
 
                 });
@@ -58,3 +93,5 @@ Db = {
 
     }
 }
+
+//Db.clearCollectionMongoose(mongoose.model('SocialMediaAccount'));

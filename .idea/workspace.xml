@@ -31,9 +31,6 @@
   <component name="IdeDocumentHistory">
     <option name="changedFiles">
       <list>
-        <option value="$PROJECT_DIR$/lib/gPlusClient.js" />
-        <option value="$PROJECT_DIR$/web.js" />
-        <option value="$PROJECT_DIR$/routes/site.js" />
         <option value="$PROJECT_DIR$/views/index.ejs" />
         <option value="$PROJECT_DIR$/routes/util.js" />
         <option value="$PROJECT_DIR$/routes/gPlus.js" />
@@ -41,12 +38,15 @@
         <option value="$PROJECT_DIR$/twitter.js" />
         <option value="$PROJECT_DIR$/authentication_twitter.txt" />
         <option value="$PROJECT_DIR$/views/test.ejs" />
-        <option value="$PROJECT_DIR$/routes/twitter.js" />
-        <option value="$PROJECT_DIR$/webHelper.js" />
         <option value="$PROJECT_DIR$/routes/googlePlus.js" />
         <option value="$PROJECT_DIR$/public/main.css" />
         <option value="$PROJECT_DIR$/public/gPlusUi.html" />
         <option value="$PROJECT_DIR$/index.js" />
+        <option value="$PROJECT_DIR$/public/meetup.html" />
+        <option value="$PROJECT_DIR$/routes/meetup.js" />
+        <option value="$PROJECT_DIR$/routes/twitter.js" />
+        <option value="$PROJECT_DIR$/Db.js" />
+        <option value="$PROJECT_DIR$/webHelper.js" />
       </list>
     </option>
   </component>
@@ -194,6 +194,7 @@
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/public" />
       <recent name="$PROJECT_DIR$/lib" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
@@ -260,8 +261,8 @@
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32791728" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="true" content_ui="tabs" />
-      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.18135701" sideWeight="0.5923191" order="0" side_tool="false" content_ui="combo" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.40768096" sideWeight="0.7653773" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.18135701" sideWeight="0.676514" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.32348597" sideWeight="0.7653773" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.37333333" sideWeight="0.2301839" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3293944" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
@@ -330,20 +331,6 @@
     <breakpoint-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/twitter.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="111" column="0" selection-start="3199" selection-end="3199" vertical-scroll-proportion="0.4326241">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$USER_HOME$/node_modules/mongoose/lib/promise.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="127" column="7" selection-start="2715" selection-end="2715" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$USER_HOME$/node_modules/express/node_modules/connect/lib/patch.js">
       <provider selected="true" editor-type-id="text-editor">
         <state line="58" column="21" selection-start="1160" selection-end="1160" vertical-scroll-proportion="0.0">
@@ -379,23 +366,9 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Db.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="33" column="47" selection-start="918" selection-end="918" vertical-scroll-proportion="0.06542056">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/public/main.css">
       <provider selected="true" editor-type-id="text-editor">
         <state line="3" column="4" selection-start="10" selection-end="10" vertical-scroll-proportion="0.12">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/routes/twitter.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="71" column="59" selection-start="1869" selection-end="1869" vertical-scroll-proportion="2.84">
           <folding />
         </state>
       </provider>
@@ -407,13 +380,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/webHelper.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="49" column="61" selection-start="1565" selection-end="1565" vertical-scroll-proportion="0.113259666">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/lib/gPlusClient.js">
       <provider selected="true" editor-type-id="text-editor">
         <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
@@ -421,16 +387,58 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/public/meetup.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="18" column="34" selection-start="286" selection-end="286" vertical-scroll-proportion="0.04411765">
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/routes/googlePlus.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="10" column="27" selection-start="205" selection-end="205" vertical-scroll-proportion="0.4">
+        <state line="29" column="1" selection-start="642" selection-end="642" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/routes/meetup.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="5" column="4" selection-start="69" selection-end="69" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$USER_HOME$/node_modules/mongoose/lib/schema.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="324" column="10" selection-start="8157" selection-end="8157" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/routes/twitter.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="144" column="94" selection-start="4593" selection-end="4593" vertical-scroll-proportion="0.0023148148">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/index.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="4" column="9" selection-start="145" selection-end="145" vertical-scroll-proportion="0.16">
+        <state line="33" column="113" selection-start="953" selection-end="953" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Db.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="89" column="19" selection-start="3049" selection-end="3049" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/webHelper.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="57" column="56" selection-start="1764" selection-end="1764" vertical-scroll-proportion="0.15274464">
           <folding />
         </state>
       </provider>

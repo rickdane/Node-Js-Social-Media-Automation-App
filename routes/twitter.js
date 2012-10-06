@@ -21,7 +21,7 @@ exports.twitterFollow = function (req, res) {
     Twitter.twitterRunCallback(function (T) {
         var jsonResponse = new Array()
 
-        Db.getTwitterUserRaw().find({isFollowed:"false"}, function (err, dataColl) {
+        Db.getSchema().find({isFollowed:"false"}, function (err, dataColl) {
 
             var numToFollow = 5
 
@@ -33,11 +33,11 @@ exports.twitterFollow = function (req, res) {
                     data.save(function () {
                     });
 
-                    T.post('friendships/create', { screen_name:data.screenName }, function (err, reply) {
+                    T.post('friendships/create', { screen_name:data.twitter }, function (err, reply) {
 
                     })
 
-                    jsonResponse[i] = data.screenName
+                    jsonResponse[i] = data.twitter
                 }
                 i++
             })
@@ -80,13 +80,13 @@ exports.twitterQueue = function (req, res) {
 
             if (i < maxCallbacksIter) {
 
-                Db.getTwitterUserRaw().find({screenName:twitterUser.screen_name}, function (err, dataColl) {
+                Db.getSchema().find({twitter:twitterUser.screen_name}, function (err, dataColl) {
 
                     //only save it if there are no existing entries
                     //TODO probably not the most efficient way to check for this, see if an alternative method is meter
                     if (dataColl.length <= 0) {
                         var rawUser = new TwitterUserRaw();
-                        rawUser.screenName = twitterUser.screen_name
+                        rawUser.twitter = twitterUser.screen_name
                         rawUser.userObj = twitterUser
                         rawUser.isFollowed = "false"
                         rawUser.save(function () {
@@ -97,11 +97,11 @@ exports.twitterQueue = function (req, res) {
 
             }
             else {
-                Db.getTwitterUserRaw().find({isFollowed:"false"}, function (err, dataColl) {
+                Db.getSchema().find({isFollowed:"false"}, function (err, dataColl) {
 
                     var i = 0
                     _.each(dataColl, function (data) {
-                        jsonResp[i] = data.screenName
+                        jsonResp[i] = data.twitter
                         i++
                     })
 
@@ -140,9 +140,9 @@ exports.tweetSearchForUsers = function (req, res) {
 
                     //TODO see if there is there a way to make the code block below into one liner
                     if (i <= maxNumToAdd)
-                        Db.addToFollowUserToDb(data)
+                        Db.addTwitterUserToFollowUserToDb(data, WebHelper.getCurrentUserId())
                     else
-                        WebHelper.generateJsonOutputUsersToAddQueue(self)
+                        WebHelper.generateJsonOutputUsersToAddQueue(self, new Array('twitter'))
                     i++
 
                 }
@@ -170,11 +170,11 @@ exports.twitterSearch = function (req, res) {
             //take subset, todo make this more dynamic as if its smaller than 15 it wouldn't work
             dataColl = dataColl.slice(0, 15)
             _.each(dataColl, function (data) {
-                Db.addToFollowUserToDb(data)
+                Db.addTwitterUserToFollowUserToDb(data, WebHelper.getCurrentUserId())
 
             })
 
-            WebHelper.generateJsonOutputUsersToAddQueue(res)
+            WebHelper.generateJsonOutputUsersToAddQueue(res, new Array('twitter'))
         })
 
     })

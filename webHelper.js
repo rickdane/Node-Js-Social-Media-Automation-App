@@ -25,17 +25,17 @@ WebHelper = {
             obj.res.end()
         })
     },
-/*    loadFollowedOfCurUser:function (T) {
-        Twitter.twitterRunCallback(function (T) {
-            T.get('friends/ids', {}, function (err, dataColl) {
-                _.each(dataColl.ids, function (data) {
+    /*    loadFollowedOfCurUser:function (T) {
+     Twitter.twitterRunCallback(function (T) {
+     T.get('friends/ids', {}, function (err, dataColl) {
+     _.each(dataColl.ids, function (data) {
 
-                    curFollowedCurUser.push(data)
+     curFollowedCurUser.push(data)
 
-                })
-            })
-        })
-    },*/
+     })
+     })
+     })
+     },*/
     /**
      * for building faceted query, the incoming post query may contain extra parameters that aren't relevant to twitter api call so this prepares a new object for the twitter api call
      */
@@ -50,22 +50,23 @@ WebHelper = {
         return searchObj
 
     },
-    generateJsonOutputUsersToAddQueue:function (res) {
+    generateJsonOutputUsersToAddQueue:function (res, accountTypes) {
 
         var jsonResp = new Array();
 
         //todo break this out into function as other endpoints want to use this as well
-        Db.getTwitterUserRaw().find({isFollowed:"false"}, function (err, dataColl) {
+        var curUserId = this.getCurrentUserId()
+        Db.getSocialMediaAccount().find({isFollowed:false, ownerId:curUserId, $or:this.prepareORHelper(accountTypes, "accountType")}, function (err, dataColl) {
 
             var i = 0
             _.each(dataColl, function (data) {
-                jsonResp[i] = data.screenName
+                jsonResp[i] = data.username
                 i++
             })
 
             //show all current usernames currently in DB to user
             //TODO this should eventually show all that have not been followed, another follower endpoint will actually do following
-         //   res.render('users', { title: 'Users', users: jsonResp });
+            //   res.render('users', { title: 'Users', users: jsonResp });
 
             res.json(jsonResp);
             res.end()
@@ -79,6 +80,26 @@ WebHelper = {
         var milesFromGeoLocation = "70mi"
         var geoCode = "37.779333,-122.393163," + milesFromGeoLocation   //this is within San Francisco, CA
         return geoCode
+    },
+    /**
+     * Dummy method to get current user id, this will be replaced with some sort of session call to get actual id of current user
+     */
+    getCurrentUserId:function () {
+        return "curUserId"
+
+    },
+    //TODO refactor to put this in appropriate place, not here
+    prepareORHelper:function (array, label) {
+        var holder = [  ]
+        var i = 0;
+        _.each(array, function (data) {
+            var obj = {}
+            obj[label] = data
+            holder[i] = obj
+            i++;
+        })
+        return holder
     }
 
 }
+
