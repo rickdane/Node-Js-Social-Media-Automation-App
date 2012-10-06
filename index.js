@@ -1,7 +1,6 @@
 var express = require('express'),
     app = express(),
     site = require('./routes/site') ,
-    util = require('./routes/util'),
     twitter = require('./routes/twitter'),
     gPlus = require('./routes/googlePlus')
 
@@ -14,8 +13,10 @@ app.set('views', __dirname + '/views')
 app.use(express.bodyParser())
 app.use(express.methodOverride());
 /*app.use(express.cookieParser());
- app.use(express.methodOverride());
- app.use(express.static(__dirname + '/public'));*/
+ app.use(express.methodOverride());*/
+app.use("/public", express.static(__dirname + '/public'));
+app.use("/lib", express.static(__dirname + '/lib'));
+//app.use(express.static(__dirname + '/public'));
 
 
 // Home Page
@@ -34,11 +35,6 @@ app.get('/twitter', twitter.twitter)
 //GPlus
 app.get('/loadGplusApp', gPlus.loadGplusApp)
 app.get('/defaultSearch', gPlus.defaultSearch)
-
-
-//TODO there is a better way to do this, refactor
-app.get('/loadJs', util.loadJs)
-app.get('/loadCss', util.loadCss)
 
 
 app.listen(7070)

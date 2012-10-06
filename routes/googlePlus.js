@@ -1,17 +1,11 @@
 var fs = require('fs');
 var _ = require('underscore');
 
-var gPlusUi = fs.readFileSync("html/gPlusUi.html", "utf-8");
 require('../util/UtilFile.js')
 require('../gPlus.js')
 require('../Db.js')
 require('../webHelper.js')
 
-exports.loadGplusApp = function (req, res) {
-
-    res.send(gPlusUi);
-
-}
 
 exports.defaultSearch = function (req, res) {
 

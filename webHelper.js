@@ -8,6 +8,10 @@ var twitterSearchParams = new Array('q', 'geocode')
 
 curFollowedCurUser = new Array()
 
+
+//TODO this is basically a "grab-bag" of functions, these need to be refactored to go in their proper place, although some may actually be generic enough to still belong here
+
+
 WebHelper = {
 
 
