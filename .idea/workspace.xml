@@ -21,7 +21,44 @@
     <favorites_list name="nodeApiClient" />
   </component>
   <component name="FileEditorManager">
-    <leaf />
+    <leaf>
+      <file leaf-file-name="Db.js" pinned="false" current="true" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/Db.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="119" column="0" selection-start="4143" selection-end="4143" vertical-scroll-proportion="0.33174226">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="model.js" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$USER_HOME$/node_modules/mongoose/lib/model.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="857" column="0" selection-start="19506" selection-end="19506" vertical-scroll-proportion="0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="webHelper.js" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/webHelper.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="57" column="56" selection-start="1764" selection-end="1764" vertical-scroll-proportion="0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="twitter.js" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/twitter.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="16" column="0" selection-start="292" selection-end="1101" vertical-scroll-proportion="0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+    </leaf>
   </component>
   <component name="FindManager">
     <FindUsagesManager>
@@ -45,8 +82,8 @@
         <option value="$PROJECT_DIR$/public/meetup.html" />
         <option value="$PROJECT_DIR$/routes/meetup.js" />
         <option value="$PROJECT_DIR$/routes/twitter.js" />
-        <option value="$PROJECT_DIR$/Db.js" />
         <option value="$PROJECT_DIR$/webHelper.js" />
+        <option value="$PROJECT_DIR$/Db.js" />
       </list>
     </option>
   </component>
@@ -331,20 +368,6 @@
     <breakpoint-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$USER_HOME$/node_modules/express/node_modules/connect/lib/patch.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="58" column="21" selection-start="1160" selection-end="1160" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/authentication_twitter.txt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="1" column="63" selection-start="93" selection-end="93" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$USER_HOME$/node_modules/mongoose/lib/utils.js">
       <provider selected="true" editor-type-id="text-editor">
         <state line="436" column="0" selection-start="9033" selection-end="9033" vertical-scroll-proportion="0.24299066">
@@ -429,16 +452,30 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Db.js">
+    <entry file="file://$PROJECT_DIR$/twitter.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="89" column="19" selection-start="3049" selection-end="3049" vertical-scroll-proportion="0.0">
+        <state line="16" column="0" selection-start="292" selection-end="1101" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/webHelper.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="57" column="56" selection-start="1764" selection-end="1764" vertical-scroll-proportion="0.15274464">
+        <state line="57" column="56" selection-start="1764" selection-end="1764" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$USER_HOME$/node_modules/mongoose/lib/model.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="857" column="0" selection-start="19506" selection-end="19506" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Db.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="119" column="0" selection-start="4143" selection-end="4143" vertical-scroll-proportion="0.33174226">
           <folding />
         </state>
       </provider>
