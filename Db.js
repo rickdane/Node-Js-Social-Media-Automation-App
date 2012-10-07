@@ -60,21 +60,16 @@ Db = {
     },
     addTwitterUserToFollowUserToDb:function (twitterUser, curUserId) {
 
-        //TODO this needs work to make it useable for more than 1 use case
-
-        //TODO this is a bit of a hack to accommodate now taking in "true" user object, figure way to make this cleaner
         var screenName = twitterUser.screen_name
         if (screenName == undefined)
             screenName = twitterUser.from_user
 
         var self = this
 
-        //TODO something is wrong here with DB call, need to figure out and fix this
-        SocialMediaAccount.find({username:screenName, ownerId:curUserId}, function (err, dataColl) {
+        SocialMediaAccount.count({username:screenName, ownerId:curUserId}, function (err, c) {
 
             //only save it if there are no existing entries
-            //TODO probably not the most efficient way to check for this, see if an alternative method is meter
-            if (dataColl.length <= 3) {
+            if (c <= 1) {
                 var rawUser = new SocialMediaAccount();
                 rawUser.username = twitterUser.screen_name
                 rawUser.userObj = twitterUser
@@ -84,7 +79,7 @@ Db = {
                 //TODO write function to populate other values in SocialMediaAccount with default values (or figure way to do this with schema directly)
                 rawUser.save(function () {
                     var userNames = []
-                    userNames.push({service:"twitterUsernames",username:twitterUser.screen_name})
+                    userNames.push({service:"twitterUsernames", username:twitterUser.screen_name})
                     self.createPersonHelper(userNames)
                 });
             }
@@ -112,13 +107,12 @@ Db = {
                     //todo change this to use findOne instead of find method
                     //finds where the array contains, since it may have more than one username per person
 
-                    //todo check if there is way to get boolean value if exists, wasteful to get whole object here, we don't need it
-                    Person.find({ $where:function () {
-                           return  this.twitterUsernames[username]
-                      //  return this[service][username]
-                    } }, function (err, dataColl) {
-                        if (dataColl != undefined && dataColl.length > 0) {
-                            person = dataColl[0]
+                    var query = {};
+                    query[service] = username;
+
+                    Person.findOne(query, function (err, data) {
+                        if (data != undefined) {
+                            person = data
                         }
                         else {
                             userNamesToAdd.push(userNameObj)
@@ -146,13 +140,7 @@ Db = {
 
                 })
                 innerCallback();
-            }/*,
-             function (innerCallback) {
-
-
-             innerCallback()
-
-             }*/
+            }
         ])
 
     }

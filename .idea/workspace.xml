@@ -25,7 +25,16 @@
       <file leaf-file-name="Db.js" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/Db.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="119" column="0" selection-start="4143" selection-end="4143" vertical-scroll-proportion="0.33174226">
+            <state line="121" column="105" selection-start="3814" selection-end="3814" vertical-scroll-proportion="0.579602">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="promise.js" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$USER_HOME$/node_modules/mongoose/lib/promise.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="128" column="0" selection-start="2749" selection-end="2749" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -224,10 +233,10 @@
   <component name="PropertiesComponent">
     <property name="options.splitter.main.proportions" value="0.3" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="options.lastSelected" value="editor.preferences.appearance" />
     <property name="recentsLimit" value="5" />
-    <property name="options.searchVisible" value="true" />
+    <property name="options.lastSelected" value="editor.preferences.appearance" />
     <property name="options.splitter.details.proportions" value="0.2" />
+    <property name="options.searchVisible" value="true" />
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
@@ -252,7 +261,7 @@
       </JSDebuggerConfigurationSettings>
       <method />
     </configuration>
-    <configuration default="false" name="web" type="NodeJSConfigurationType" factoryName="Node JS" path-to-node="/usr/local/bin/node" path-to-js-file="index.js" working-dir="$PROJECT_DIR$">
+    <configuration default="false" name="web" type="NodeJSConfigurationType" factoryName="Node JS" path-to-node="/usr/local/bin/node" path-to-js-file="index.js" working-dir="$PROJECT_DIR$" coffeescript-run="false">
       <RunnerSettings RunnerId="NodeJS.debug" />
       <RunnerSettings RunnerId="NodeJS.run" />
       <ConfigurationWrapper RunnerId="NodeJS.debug" />
@@ -296,10 +305,9 @@
     <layout>
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32791728" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="true" content_ui="tabs" />
-      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.18135701" sideWeight="0.676514" order="0" side_tool="false" content_ui="combo" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.32348597" sideWeight="0.7653773" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.18135701" sideWeight="0.65140325" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.34859675" sideWeight="0.7653773" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.37333333" sideWeight="0.2301839" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3293944" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
@@ -308,6 +316,7 @@
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32791728" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
@@ -368,114 +377,86 @@
     <breakpoint-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$USER_HOME$/node_modules/mongoose/lib/utils.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="436" column="0" selection-start="9033" selection-end="9033" vertical-scroll-proportion="0.24299066">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/views/test.ejs">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="2" column="54" selection-start="73" selection-end="73" vertical-scroll-proportion="0.074257426">
-          <folding />
-        </state>
+        <state line="2" column="54" selection-start="73" selection-end="73" vertical-scroll-proportion="0.074257426" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/routes/site.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="2" column="2" selection-start="101" selection-end="101" vertical-scroll-proportion="0.07009346">
-          <folding />
-        </state>
+        <state line="2" column="2" selection-start="101" selection-end="101" vertical-scroll-proportion="0.07009346" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/public/main.css">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="3" column="4" selection-start="10" selection-end="10" vertical-scroll-proportion="0.12">
-          <folding />
-        </state>
+        <state line="3" column="4" selection-start="10" selection-end="10" vertical-scroll-proportion="0.12" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/public/gPlusUi.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="33" column="57" selection-start="649" selection-end="649" vertical-scroll-proportion="0.5868946">
-          <folding />
-        </state>
+        <state line="33" column="57" selection-start="649" selection-end="649" vertical-scroll-proportion="0.5868946" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/lib/gPlusClient.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/public/meetup.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="18" column="34" selection-start="286" selection-end="286" vertical-scroll-proportion="0.04411765">
-          <folding />
-        </state>
+        <state line="18" column="34" selection-start="286" selection-end="286" vertical-scroll-proportion="0.04411765" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/routes/googlePlus.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="29" column="1" selection-start="642" selection-end="642" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
+        <state line="29" column="1" selection-start="642" selection-end="642" vertical-scroll-proportion="0.0" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/routes/meetup.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="5" column="4" selection-start="69" selection-end="69" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
+        <state line="5" column="4" selection-start="69" selection-end="69" vertical-scroll-proportion="0.0" />
       </provider>
     </entry>
     <entry file="file://$USER_HOME$/node_modules/mongoose/lib/schema.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="324" column="10" selection-start="8157" selection-end="8157" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
+        <state line="324" column="10" selection-start="8157" selection-end="8157" vertical-scroll-proportion="0.0" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/routes/twitter.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="144" column="94" selection-start="4593" selection-end="4593" vertical-scroll-proportion="0.0023148148">
-          <folding />
-        </state>
+        <state line="144" column="94" selection-start="4593" selection-end="4593" vertical-scroll-proportion="0.0023148148" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/index.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="33" column="113" selection-start="953" selection-end="953" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/twitter.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="16" column="0" selection-start="292" selection-end="1101" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/webHelper.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="57" column="56" selection-start="1764" selection-end="1764" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
+        <state line="33" column="113" selection-start="953" selection-end="953" vertical-scroll-proportion="0.0" />
       </provider>
     </entry>
     <entry file="file://$USER_HOME$/node_modules/mongoose/lib/model.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="857" column="0" selection-start="19506" selection-end="19506" vertical-scroll-proportion="0.0">
+        <state line="857" column="0" selection-start="19506" selection-end="19506" vertical-scroll-proportion="0.0" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/webHelper.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="57" column="56" selection-start="1764" selection-end="1764" vertical-scroll-proportion="0.0" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/twitter.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="16" column="0" selection-start="292" selection-end="1101" vertical-scroll-proportion="0.0" />
+      </provider>
+    </entry>
+    <entry file="file://$USER_HOME$/node_modules/mongoose/lib/promise.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="128" column="0" selection-start="2749" selection-end="2749" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/Db.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="119" column="0" selection-start="4143" selection-end="4143" vertical-scroll-proportion="0.33174226">
+        <state line="121" column="105" selection-start="3814" selection-end="3814" vertical-scroll-proportion="0.579602">
           <folding />
         </state>
       </provider>
